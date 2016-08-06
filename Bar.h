@@ -20,6 +20,7 @@ struct Bar
 	double high;
 	double low;
 	double close;
+	int vol;
 };
 
 ostream& operator<<(ostream& os, Bar& b);

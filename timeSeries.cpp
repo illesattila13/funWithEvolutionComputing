@@ -17,7 +17,7 @@ void TimeSeries::readFromFile(const char * filename)
 		>> bar.open >> c
 		>> bar.high >> c
 		>> bar.low >> c
-		>> bar.close >> c >> c)
+		>> bar.close >> c >> bar.vol)
 	{
 		/*ifile >> bar.t.y >> c
 			>> bar.t.m >> c
