@@ -5,7 +5,8 @@ int main()
 {
 	TimeSeries ts;
 	ts.readFromFile("EURUSD1.csv");
-	ts.addInd(new SimpleMovingAverage(3));
+	ts.addInd(new Indicator::SimpleMovingAverage(3));
+	ts.addInd(new Indicator::ExponentialMovingAverage(0.8));
 	ts.calculateIndicators();
-	ts.printData(0);
+	ts.printData(3);
 }

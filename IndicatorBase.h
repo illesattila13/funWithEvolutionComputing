@@ -10,6 +10,7 @@ class IndicatorBase
 {
 protected:
 	unsigned int id;
+	unsigned int calculated;
 public:
 	IndicatorBase();
 	/**

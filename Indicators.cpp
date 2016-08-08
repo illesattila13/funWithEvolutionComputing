@@ -1,12 +1,12 @@
 #include "Indicators.h"
 
-SimpleMovingAverage::SimpleMovingAverage(unsigned int N_, OHLC ohlc_): N(N_), ohlc_param(ohlc_), calculated(0)
+Indicator::SimpleMovingAverage::SimpleMovingAverage(unsigned int N_, OHLC ohlc_): N(N_), ohlc_param(ohlc_)
 {
 
 }
 
 
-int SimpleMovingAverage::calculate(list<Bar>& series)
+int Indicator::SimpleMovingAverage::calculate(list<Bar>& series)
 {
 	list<Bar>::iterator back, front;
 	back = front = series.begin();
@@ -38,6 +38,23 @@ int SimpleMovingAverage::calculate(list<Bar>& series)
 		++front;
 		++calculated;
 		
+	}
+	return calculated;
+}
+
+Indicator::ExponentialMovingAverage::ExponentialMovingAverage(double P_, OHLC ohlc_): P(P_),ohlc_param(ohlc_), pre(0.0)
+{
+
+}
+
+
+int Indicator::ExponentialMovingAverage::calculate(list<Bar>& series)
+{
+	for (list<Bar>::iterator it = series.begin(); it != series.end(); ++it)
+	{
+		it->indDatas.resize(id+1);
+		it->indDatas[id] = ( (it->ohlc[ohlc_param] * P) + pre*(1 - P) );
+		++calculated;
 	}
 	return calculated;
 }

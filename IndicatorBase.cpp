@@ -1,6 +1,6 @@
 #include "IndicatorBase.h"
 
-IndicatorBase::IndicatorBase()
+IndicatorBase::IndicatorBase() : calculated(0)
 {
 	
 }

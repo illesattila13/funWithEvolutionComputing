@@ -8,14 +8,25 @@
 
 using namespace std;
 
-class SimpleMovingAverage : public IndicatorBase
+namespace Indicator
 {
-	unsigned int N;
-	OHLC ohlc_param;
-	unsigned int calculated;
-public:
-	SimpleMovingAverage(unsigned int N_, OHLC ohlc_ = C);
+	class SimpleMovingAverage : public IndicatorBase
+	{
+		unsigned int N;
+		OHLC ohlc_param;
+		//unsigned int calculated;
+	public:
+		SimpleMovingAverage(unsigned int N_, OHLC ohlc_ = C);
+		int calculate(list<Bar>& series);
+	};
 
-    
-	int calculate(list<Bar>& series);
-};
+	class ExponentialMovingAverage : public IndicatorBase
+	{
+		double P;
+		double pre;
+		OHLC ohlc_param;
+	public:
+		ExponentialMovingAverage(double P_, OHLC ohlc_ = C);
+		int calculate(list<Bar>& series);
+	};
+}
