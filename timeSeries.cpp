@@ -24,10 +24,19 @@ void TimeSeries::readFromFile(const char * filename)
 	}
 }
 
-void TimeSeries::printData()
+void TimeSeries::printData(int n)
 {
 	list<Bar>::iterator it;
-	for (it = series.begin(); it != series.end(); ++it)
+	if (n >= 0)
+	{
+		it = series.end();
+		advance(it, -n);
+	}
+	else
+	{
+		it = series.begin();
+	}
+	for (it ; it != series.end(); ++it)
 	{
 		cout << *it << endl;
 	}

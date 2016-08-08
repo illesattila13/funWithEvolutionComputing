@@ -7,5 +7,5 @@ int main()
 	ts.readFromFile("EURUSD1.csv");
 	ts.addInd(new SimpleMovingAverage(3));
 	ts.calculateIndicators();
-	ts.printData();
+	ts.printData(0);
 }

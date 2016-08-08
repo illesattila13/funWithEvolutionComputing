@@ -19,7 +19,7 @@ class TimeSeries
 	friend IndicatorBase;
 public:
 	void readFromFile(const char* filename);
-	void printData();
+	void printData(int n = -1);
 	int addInd(IndicatorBase *ind);
 	void calculateIndicators();
 	~TimeSeries();
