@@ -2,6 +2,8 @@
 #include <list>
 #include "Bar.h"
 #include <iostream>
+#include "IndicatorBase.h"
+#include <vector>
 
 using namespace std;
 
@@ -11,14 +13,14 @@ using namespace std;
 class TimeSeries
 {
 	list<Bar> series;
+	vector<IndicatorBase*> indicators;
+	static int indCount;
+
+	friend IndicatorBase;
 public:
 	void readFromFile(const char* filename);
-	void printData()
-	{
-		list<Bar>::iterator it;
-		for (it = series.begin(); it != series.end(); ++it)
-		{
-			cout << *it << endl;
-		}
-	}
+	void printData();
+	int addInd(IndicatorBase *ind);
+	void calculateIndicators();
+	~TimeSeries();
 };

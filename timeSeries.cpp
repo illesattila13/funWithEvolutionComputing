@@ -14,20 +14,46 @@ void TimeSeries::readFromFile(const char * filename)
 		>> bar.t.d >> c
 		>> bar.t.h >> c
 		>> bar.t.min >> c
-		>> bar.open >> c
-		>> bar.high >> c
-		>> bar.low >> c
-		>> bar.close >> c >> bar.vol)
+		>> bar.ohlc[0] >> c
+		>> bar.ohlc[1] >> c
+		>> bar.ohlc[2] >> c
+		>> bar.ohlc[3] >> c >> bar.vol)
 	{
-		/*ifile >> bar.t.y >> c
-			>> bar.t.m >> c
-			>> bar.t.d >> c
-			>> bar.t.h >> c
-			>> bar.t.min >> c
-			>> bar.open >> c
-			>> bar.high >> c
-			>> bar.low >> c
-			>> bar.close >> c >> c;*/
+		
 		series.push_back(bar);
+	}
+}
+
+void TimeSeries::printData()
+{
+	list<Bar>::iterator it;
+	for (it = series.begin(); it != series.end(); ++it)
+	{
+		cout << *it << endl;
+	}
+}
+
+int TimeSeries::indCount = 0;
+
+int TimeSeries::addInd(IndicatorBase * ind)
+{
+	ind->setId(indCount++);
+	indicators.push_back(ind);
+	return indCount;
+}
+
+void TimeSeries::calculateIndicators()
+{
+	for (IndicatorBase* inds : indicators)
+	{
+		inds->calculate(series);
+	}
+}
+
+TimeSeries::~TimeSeries()
+{
+	for (IndicatorBase* inds : indicators)
+	{
+		delete inds;
 	}
 }
