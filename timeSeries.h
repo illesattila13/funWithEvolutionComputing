@@ -4,6 +4,7 @@
 #include <iostream>
 #include "IndicatorBase.h"
 #include <vector>
+#include "PriceEnums.h"
 
 using namespace std;
 
@@ -22,5 +23,7 @@ public:
 	void printData(int n = -1);
 	int addInd(IndicatorBase *ind);
 	void calculateIndicators();
+	void matlabPlot();
+	double * priceToArray(OHLC ohlc_);
 	~TimeSeries();
 };
