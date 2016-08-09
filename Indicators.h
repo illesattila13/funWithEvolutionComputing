@@ -29,4 +29,14 @@ namespace Indicator
 		ExponentialMovingAverage(double P_, OHLC ohlc_ = C);
 		int calculate(list<Bar>& series);
 	};
+
+	class SmoothedMovingAverage : public IndicatorBase
+	{
+		unsigned int N;
+		OHLC ohlc_param;
+		double pre;
+	public:
+		SmoothedMovingAverage(unsigned int N_, OHLC ohlc_ = C);
+		int calculate(list<Bar>& series);
+	};
 }
