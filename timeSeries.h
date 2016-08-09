@@ -23,7 +23,8 @@ public:
 	void printData(int n = -1);
 	int addInd(IndicatorBase *ind);
 	void calculateIndicators();
-	void matlabPlot();
-	double * priceToArray(OHLC ohlc_);
+	void matlabPlot(unsigned int num);
+	double * priceToArray(OHLC ohlc_, unsigned int num);
+	double* indDataToArray(unsigned id, unsigned int num);
 	~TimeSeries();
 };

@@ -1,0 +1,5 @@
+-Project Property
+	- C/C++ General Additional Include Directory: C:\Program Files\MATLAB\R2016a\extern\include
+	-C/C++ Precompiled Headers Precompiled Header: Not Using...
+	-Linker General Additional Lib. Dir. : C:\Program Files\MATLAB\R2016a\extern\lib\win64\microsoft
+	-Linker Input Additional Dependencies : libmx.lib;libeng.lib;libmat.lib

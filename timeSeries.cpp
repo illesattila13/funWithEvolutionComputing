@@ -61,7 +61,7 @@ void TimeSeries::calculateIndicators()
 	}
 }
 
-void TimeSeries::matlabPlot()
+void TimeSeries::matlabPlot(unsigned int num)
 {
 
 	Engine *ep;
@@ -75,23 +75,32 @@ void TimeSeries::matlabPlot()
 		cerr<< "\nCan't start MATLAB engine\n";
 		return;
 	}
-	mxArray *high = mxCreateDoubleMatrix(1, series.size(), mxREAL);
-	mxArray *low = mxCreateDoubleMatrix(1, series.size(), mxREAL);
-	mxArray *close = mxCreateDoubleMatrix(1, series.size(), mxREAL);
-	mxArray *open = mxCreateDoubleMatrix(1, series.size(), mxREAL);
+	mxArray *high = mxCreateDoubleMatrix(1, num, mxREAL);
+	mxArray *low = mxCreateDoubleMatrix(1, num, mxREAL);
+	mxArray *close = mxCreateDoubleMatrix(1, num, mxREAL);
+	mxArray *open = mxCreateDoubleMatrix(1, num, mxREAL);
+	mxArray *indicator = mxCreateDoubleMatrix(1, num, mxREAL);
 
-	memcpy((void*)mxGetPr(high),	(void*)priceToArray(H), series.size()*sizeof(double));
-	memcpy((void*)mxGetPr(low),		(void*)priceToArray(L), series.size()*sizeof(double));
-	memcpy((void*)mxGetPr(close),	(void*)priceToArray(C), series.size()*sizeof(double));
-	memcpy((void*)mxGetPr(open),	(void*)priceToArray(O), series.size()*sizeof(double));
+	double *h, *l, *o, *c, *ind;
+
+	h=priceToArray(H, num);
+	l=priceToArray(L, num);
+	c=priceToArray(C, num);
+	o=priceToArray(O, num);
+	ind = indDataToArray(0, num);
 
 
+	memcpy((void*)mxGetPr(high),	(void*)h, num*sizeof(double));
+	memcpy((void*)mxGetPr(low),		(void*)l, num*sizeof(double));
+	memcpy((void*)mxGetPr(close),	(void*)c, num*sizeof(double));
+	memcpy((void*)mxGetPr(open),	(void*)o, num*sizeof(double));
+	memcpy((void*)mxGetPr(indicator),(void*)ind, num * sizeof(double));
 
-	/*delete[] open;
-	delete[] high;
-	delete[] close;
-	delete[] low;*/
-
+	delete[] h;
+	delete[] l;
+	delete[] c;
+	delete[] o; 
+	delete[] ind;
 	/*
 	* Place the variable data into the MATLAB workspace
 	*/
@@ -99,27 +108,51 @@ void TimeSeries::matlabPlot()
 	engPutVariable(ep, "low",low );
 	engPutVariable(ep, "close",close );
 	engPutVariable(ep, "open",open );
+	engPutVariable(ep, "indicator", indicator);
 
 
-	engEvalString(ep, "candle(high', low', close', open','red' )");
-	engEvalString(ep, "zoom xon");
-	engEvalString(ep, "zoom yon");
+	engEvalString(ep, "candle(high', low', close', open','green' )");
+	engEvalString(ep, "hold on");
+	engEvalString(ep, "grid on");
+	engEvalString(ep, "plot(indicator,'Linewidth',2)");
+	engEvalString(ep, "set(gca,'Color','black')");
+
 }
 
 /*
 @return: a pointer to a array in the heap
 THE CALLER MUST FREE IT!!!!!!!!!!!!!!!!!!!!!!!
 */
-double * TimeSeries::priceToArray(OHLC ohlc_)
+double * TimeSeries::priceToArray(OHLC ohlc_, unsigned int num)
 {
-	double *prices = new double[series.size()];
+	double *prices = new double[num];
 	int i = 0;
-	for (list<Bar>::iterator it = series.begin(); it != series.end(); ++it, ++i)
+	list<Bar>::iterator it = series.end(); 
+	int n = num;
+	advance(it, -n);
+	for (; it != series.end(); ++it, ++i)
 	{
 		prices[i] = it->ohlc[ohlc_];
 	}
 	return prices;
 }
+
+double * TimeSeries::indDataToArray(unsigned id, unsigned int num)
+{
+
+	double *values = new double[num];
+	int i = 0;
+	list<Bar>::iterator it = series.end();
+	int n = num;
+	advance(it, -n);
+	for (; it != series.end(); ++it, ++i)
+	{
+		values[i] = it->indDatas[id];
+	}
+	return values;
+}
+
+
 
 TimeSeries::~TimeSeries()
 {
