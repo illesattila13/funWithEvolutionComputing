@@ -52,8 +52,17 @@ int Indicator::ExponentialMovingAverage::calculate(list<Bar>& series)
 {
 	for (list<Bar>::iterator it = series.begin(); it != series.end(); ++it)
 	{
-		it->indDatas.resize(id+1);
-		it->indDatas[id] = ( (it->ohlc[ohlc_param] * P) + pre*(1 - P) );
+		it->indDatas.resize(id + 1);
+		if (calculated == 0)
+		{
+			pre = it->ohlc[ohlc_param];
+			it->indDatas[id] = pre;
+			++calculated;
+			
+		}
+
+		
+		pre = it->indDatas[id] = ( (it->ohlc[ohlc_param] * P) + pre*(1 - P) );
 		++calculated;
 	}
 	return calculated;
