@@ -3,13 +3,20 @@
 double Order::spread = 0.00050;
 
 Order::Order(double openPrice_, OrderType orderType_, double lotSize_):
-	openPrice(openPrice_),
 	orderType(orderType_),
 	lotSize(lotSize_),
 	stopLoss(-1),
 	takeProfit(-1),
 	trailingStop(-1)
 {
+	if (orderType == SELL)
+	{
+		openPrice = openPrice_ + spread;
+	}
+	else if (orderType == BUY)
+	{
+		openPrice = openPrice_ - spread;
+	}
 }
 
 bool Order::evalOrder(double price)

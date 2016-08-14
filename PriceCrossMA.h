@@ -1,10 +1,14 @@
 #pragma once
+#include "Order.h"
+#include <vector>
+#
 
-#include "TradingRuleBase.h"
 
-
-class PriceCrossMA : public TradingRuleBase
+class PriceCrossMA
 {
 	double money;
+	vector<double> MA;
+
+public:
 
 };

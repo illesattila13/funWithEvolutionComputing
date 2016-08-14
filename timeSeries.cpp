@@ -162,6 +162,11 @@ double * TimeSeries::indDataToArray(unsigned id, unsigned int num)
 	return values;
 }
 
+ list<Bar>& TimeSeries::getSeries()
+{
+	return series;
+}
+
 
 
 TimeSeries::~TimeSeries()
