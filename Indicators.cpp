@@ -5,7 +5,7 @@ Indicator::SimpleMovingAverage::SimpleMovingAverage(unsigned int N_, OHLC ohlc_)
 
 }
 
-int Indicator::SimpleMovingAverage::calculate(const list<Bar>& series)
+int Indicator::SimpleMovingAverage::calculate( list<Bar>& series)
 {
 	list<Bar>::iterator back, front;
 	back = front = series.begin();
@@ -41,7 +41,7 @@ int Indicator::SimpleMovingAverage::calculate(const list<Bar>& series)
 	return calculated;
 }
 
-int Indicator::SimpleMovingAverage::calculate(const list<Bar>& series, vector<double>& indData)
+int Indicator::SimpleMovingAverage::calculate( list<Bar>& series, vector<double>& indData)
 {
 	list<Bar>::iterator back, front;
 	back = front = series.begin();
@@ -84,7 +84,7 @@ Indicator::ExponentialMovingAverage::ExponentialMovingAverage(double P_, OHLC oh
 
 }
 
-int Indicator::ExponentialMovingAverage::calculate(const list<Bar>& series)
+int Indicator::ExponentialMovingAverage::calculate( list<Bar>& series)
 {
 	for (list<Bar>::iterator it = series.begin(); it != series.end(); ++it)
 	{
@@ -104,7 +104,7 @@ int Indicator::ExponentialMovingAverage::calculate(const list<Bar>& series)
 	return calculated;
 }
 
-int Indicator::ExponentialMovingAverage::calculate(const list<Bar>& series, vector<double>& indData)
+int Indicator::ExponentialMovingAverage::calculate( list<Bar>& series, vector<double>& indData)
 {
 	indData.resize(series.size());
 	int idx = 0;
@@ -132,7 +132,7 @@ Indicator::SmoothedMovingAverage::SmoothedMovingAverage(unsigned int N_, OHLC oh
 {
 }
 
-int Indicator::SmoothedMovingAverage::calculate(const list<Bar>& series)
+int Indicator::SmoothedMovingAverage::calculate( list<Bar>& series)
 {
 	double Nsum = 0.0;
 
@@ -159,7 +159,7 @@ int Indicator::SmoothedMovingAverage::calculate(const list<Bar>& series)
 	return 0;
 }
 
-int Indicator::SmoothedMovingAverage::calculate(const list<Bar>& series, vector<double>& indData)
+int Indicator::SmoothedMovingAverage::calculate( list<Bar>& series, vector<double>& indData)
 {
 	double Nsum = 0.0;
 	int idx = 0;

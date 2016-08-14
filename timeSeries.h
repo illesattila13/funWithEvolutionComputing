@@ -29,6 +29,6 @@ public:
 	void matlabPlot(unsigned int num);
 	double * priceToArray(OHLC ohlc_, unsigned int num);
 	double* indDataToArray(unsigned id, unsigned int num);
-	const list<Bar>& getSeries();
+	list<Bar>& getSeries();
 	~TimeSeries();
 };
