@@ -19,6 +19,8 @@ public:
 	*/
 	
 	virtual int calculate(list<Bar>& series) = 0;
+
+	virtual int calculate(list<Bar>& series, vector<double>& indData) = 0;
 	
 	void setId(unsigned int id_);
 

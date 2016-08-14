@@ -18,6 +18,7 @@ namespace Indicator
 	public:
 		SimpleMovingAverage(unsigned int N_, OHLC ohlc_ = C);
 		int calculate(list<Bar>& series);
+		int calculate(list<Bar>& series, vector<double>& indData);
 	};
 
 	class ExponentialMovingAverage : public IndicatorBase
@@ -28,6 +29,7 @@ namespace Indicator
 	public:
 		ExponentialMovingAverage(double P_, OHLC ohlc_ = C);
 		int calculate(list<Bar>& series);
+		int calculate(list<Bar>& series, vector<double>& indData);
 	};
 
 	class SmoothedMovingAverage : public IndicatorBase
@@ -38,5 +40,6 @@ namespace Indicator
 	public:
 		SmoothedMovingAverage(unsigned int N_, OHLC ohlc_ = C);
 		int calculate(list<Bar>& series);
+		int calculate(list<Bar>& series, vector<double>& indData);
 	};
 }

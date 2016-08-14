@@ -41,6 +41,43 @@ int Indicator::SimpleMovingAverage::calculate(list<Bar>& series)
 	return calculated;
 }
 
+int Indicator::SimpleMovingAverage::calculate(list<Bar>& series, vector<double>& indData)
+{
+	list<Bar>::iterator back, front;
+	back = front = series.begin();
+	double Nsum = 0.0;
+	double avg;
+	int idx = 0;
+
+	while (front != series.end())
+	{
+		Nsum += front->ohlc[ohlc_param];
+		indData.resize(series.size());
+
+
+		if (calculated > (N - 1))
+		{
+			Nsum -= back->ohlc[ohlc_param];
+			++back;
+			avg = Nsum / N;
+			indData[idx] = avg;
+
+		}
+		else if (calculated == (N - 1))
+		{
+			avg = Nsum / N;
+			indData[idx] = avg;
+
+
+		}
+		++idx;
+		++front;
+		++calculated;
+
+	}
+	return calculated;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 Indicator::ExponentialMovingAverage::ExponentialMovingAverage(double P_, OHLC ohlc_): P(P_),ohlc_param(ohlc_), pre(0.0)
 {
@@ -62,6 +99,29 @@ int Indicator::ExponentialMovingAverage::calculate(list<Bar>& series)
 
 		
 		pre = it->indDatas[id] = ( (it->ohlc[ohlc_param] * P) + pre*(1 - P) );
+		++calculated;
+	}
+	return calculated;
+}
+
+int Indicator::ExponentialMovingAverage::calculate(list<Bar>& series, vector<double>& indData)
+{
+	indData.resize(series.size());
+	int idx = 0;
+	for (list<Bar>::iterator it = series.begin(); it != series.end(); ++it)
+	{
+		
+		if (calculated == 0)
+		{
+			pre = it->ohlc[ohlc_param];
+			indData[idx++] = pre;
+			++calculated;
+			continue;
+
+		}
+
+
+		pre = indData[idx++] = ((it->ohlc[ohlc_param] * P) + pre*(1 - P));
 		++calculated;
 	}
 	return calculated;
@@ -97,4 +157,30 @@ int Indicator::SmoothedMovingAverage::calculate(list<Bar>& series)
 
 
 	return 0;
+}
+
+int Indicator::SmoothedMovingAverage::calculate(list<Bar>& series, vector<double>& indData)
+{
+	double Nsum = 0.0;
+	int idx = 0;
+	for (list<Bar>::iterator it = series.begin(); it != series.end(); ++it)
+	{
+		indData.resize(series.size());
+		if (calculated > (N - 1))
+		{
+			pre = indData[idx] = (pre * (N - 1) + it->ohlc[ohlc_param]) / N;
+		}
+		else if (calculated < (N - 1))
+		{
+			Nsum += it->ohlc[ohlc_param];
+		}
+		else if (calculated == (N - 1))
+		{
+			Nsum += it->ohlc[ohlc_param];
+			pre = indData[idx] = Nsum / N;
+		}
+		++idx;
+		++calculated;
+	}
+	return calculated;
 }

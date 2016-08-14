@@ -16,9 +16,12 @@ class TimeSeries
 	list<Bar> series;
 	vector<IndicatorBase*> indicators;
 	static int indCount;
+	int barCount;
 
 	friend IndicatorBase;
 public:
+	TimeSeries();
+	int getBarCount();
 	void readFromFile(const char* filename);
 	void printData(int n = -1);
 	int addInd(IndicatorBase *ind);

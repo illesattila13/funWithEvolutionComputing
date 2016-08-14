@@ -6,6 +6,15 @@
 
 using namespace std;
 
+TimeSeries::TimeSeries(): barCount(0)
+{
+}
+
+int TimeSeries::getBarCount()
+{
+	return barCount;
+}
+
 void TimeSeries::readFromFile(const char * filename)
 {
 	ifstream ifile(filename);
@@ -23,6 +32,7 @@ void TimeSeries::readFromFile(const char * filename)
 	{
 		
 		series.push_back(bar);
+		++barCount;
 	}
 }
 
