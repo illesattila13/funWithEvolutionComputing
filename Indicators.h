@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IndicatorBase.h"
-#include "PriceEnums.h"
+#include "Enums.h"
 #include <list>
 #include "Bar.h"
 

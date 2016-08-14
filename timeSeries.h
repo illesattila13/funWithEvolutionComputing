@@ -4,7 +4,7 @@
 #include <iostream>
 #include "IndicatorBase.h"
 #include <vector>
-#include "PriceEnums.h"
+#include "Enums.h"
 
 using namespace std;
 

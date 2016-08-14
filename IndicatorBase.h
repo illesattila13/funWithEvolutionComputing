@@ -1,7 +1,7 @@
 #pragma once
 #include <list>
 #include "Bar.h"
-#include <list>
+
 /*
 Base class for indicators. 
 */
