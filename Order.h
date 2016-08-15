@@ -15,7 +15,7 @@ class Order
 	double trailingStop;
 	static double spread;
 public:
-	Order(double openPrice_, OrderType orderType_, double lotSize_);
+	Order(double openPrice_, OrderType orderType_, double lotSize_, double takeProfit_ = -1, double stopLoss_ = -1, double trailingStop_ = -1);
 	bool evalOrder(double price);
 	double closeOrder(double price);
 	void setTrailingStop(double tStop_);
@@ -25,4 +25,5 @@ public:
 	void setTakeProfit(double takeProfit_);
 	double getTakeProfit();
 	OrderType getOrderTyoe();
+
 };

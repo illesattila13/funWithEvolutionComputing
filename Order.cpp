@@ -1,27 +1,46 @@
 #include "Order.h"
 
-double Order::spread = 0.00050;
+double Order::spread = 0.00020;
 
-Order::Order(double openPrice_, OrderType orderType_, double lotSize_):
+Order::Order(double openPrice_, OrderType orderType_, double lotSize_, double takeProfit_ , double stopLoss_ , double trailingStop_ ):
 	orderType(orderType_),
 	lotSize(lotSize_),
-	stopLoss(-1),
-	takeProfit(-1),
-	trailingStop(-1)
+	trailingStop(trailingStop_)
 {
 	if (orderType == SELL)
 	{
-		openPrice = openPrice_ + spread;
+		openPrice = openPrice_ - spread;
+		takeProfit = openPrice - takeProfit_;
+		stopLoss = openPrice + stopLoss_;
 	}
 	else if (orderType == BUY)
 	{
-		openPrice = openPrice_ - spread;
+		openPrice = openPrice_ + spread;
+		takeProfit = openPrice + takeProfit_;
+		stopLoss = openPrice - stopLoss_;
+	}
+	if (trailingStop_ > 0)
+	{
+		if (orderType == SELL)
+		{
+			stopLoss = openPrice + trailingStop;
+		}
+		else if (orderType == BUY)
+		{
+			stopLoss = openPrice - trailingStop;
+		}
+	}
+	else
+	{
+		
 	}
 }
 
 bool Order::evalOrder(double price)
 {
-	if (trailingStop < 0 && stopLoss >=0)
+	//nem vesszük figyelembe
+	return true;///////////////////////////////////////////////////////////////////////////////////
+	if (trailingStop < 0 )
 	{
 		if (orderType == SELL)
 		{
@@ -36,7 +55,7 @@ bool Order::evalOrder(double price)
 		}
 		if (orderType == BUY)
 		{
-			if (price <= stopLoss && price >= takeProfit)
+			if (price <= stopLoss)
 			{
 				return false;
 			}

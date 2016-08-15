@@ -10,14 +10,18 @@ using namespace std;
 
 class PriceCrossMA
 {
-	double money;
+	double deposit;
 	int MAPeriod;
 	vector<double> MA;
 	list<Bar> &series;
 	Order* actOrder;
-	bool isOrder;
+	double takeProfit;
+	double stopLoss;
+	double trailingStop;
+	double profit;
+
 
 public:
-	PriceCrossMA(int MAPer_, list<Bar>& series_, double money_);
+	PriceCrossMA(list<Bar>& series_, double deposit_, int MAPer_, double takeProfit_, double stopLoss_, double trailingStop_);
 	double trade();
 };
