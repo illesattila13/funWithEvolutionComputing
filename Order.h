@@ -24,4 +24,5 @@ public:
 	double getStopLoss();
 	void setTakeProfit(double takeProfit_);
 	double getTakeProfit();
+	OrderType getOrderTyoe();
 };

@@ -123,3 +123,8 @@ double Order::getTakeProfit()
 {
 	return takeProfit;
 }
+
+OrderType Order::getOrderTyoe()
+{
+	return orderType;
+}
